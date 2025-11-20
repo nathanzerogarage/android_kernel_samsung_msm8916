@@ -1,0 +1,5 @@
+mkdir TC
+
+git clone https://github.com/kdrag0n/proton-clang.git TC/proton-clang
+
+git clone https://github.com/nathanzerogarage/android-prebuilts-gcc-linux-x86-arm-arm-eabi-7.2.git TC/prebuilts/gcc/linux-x86/arm/arm-eabi-7.2

@@ -1,11 +1,16 @@
 #!/bin/bash
 
+export KBUILD_BUILD_USER="lain"
+export LOCALVERSION="-openthe3xit"
+echo $KBUILD_BUILD_USER
+echo $KBUILD_BUILD_HOST
+echo -e "done?"
+sleep 5s
+
 export ARCH=arm
-export CROSS_COMPILE=$(pwd)/../PLATFORM/prebuilts/gcc/linux-x86/arm/arm-eabi-4.8/bin/arm-eabi-
+export CROSS_COMPILE=$(pwd)/TC/prebuilts/gcc/linux-x86/arm/arm-eabi-7.2/bin/arm-eabi-
 
-mkdir output
-
-make -C $(pwd) O=output VARIANT_DEFCONFIG=msm8916_sec_gtelwifi_usa_defconfig msm8916_sec_defconfig SELINUX_DEFCONFIG=selinux_defconfig
+make -C $(pwd) O=output VARIANT_DEFCONFIG=msm8916_sec_j5lte_eur_defconfig SELINUX_DEFCONFIG=selinux_defconfig
 make -C $(pwd) O=output
 
 cp output/arch/arm/boot/Image $(pwd)/arch/arm/boot/zImage

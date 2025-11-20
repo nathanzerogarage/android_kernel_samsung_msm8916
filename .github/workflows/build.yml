@@ -1,0 +1,58 @@
+name: Build test
+
+on:
+  workflow_dispatch:
+  watch:
+   types: [started]
+
+defaults:
+  run:
+   shell: bash
+
+jobs:
+ buildtest:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set Swap Space
+        uses: pierotofy/set-swap-space@master
+        with:
+          swap-size-gb: 5
+
+      - name: setup package
+        run: |
+         sudo apt-get update
+         sudo apt-get install -y build-essential clang bc bison libssl-dev libfl-dev libncurses5-dev libzstd-dev libtinfo5
+         sudo apt-get install -y curl git ftp lftp wget libarchive-tools ccache python2 python2-dev python3
+         sudo apt-get install -y zip unzip tar gzip bzip2 rar unrar cpio
+
+      - name: setup toolchain
+        run: |
+         bash tcsetup
+
+      - name: start up
+        run: |
+         bash build_kernel.sh
+
+      - name: anykernel ~ zipping
+        run: |
+         git clone https://github.com/imnathanzero/AnyKernel3 -b j5 AnyKernel3
+         rm -rf AnyKernel3/.git AnyKernel3/.github AnyKernel3/LICENSE AnyKernel3/README.md
+          if [[ -f out/arch/arm/boot/Image.gz-dtb ]]; then
+            cp out/arch/arm/boot/Image.gz-dtb AnyKernel3/Image.gz-dtb
+          elif [[ -f out/arch/arm/boot/Image-dtb ]]; then
+            cp out/arch/arm/boot/Image-dtb AnyKernel3/Image-dtb
+          elif [[ -f out/arch/arm/boot/Image.gz ]]; then
+            cp out/arch/arm/boot/Image.gz AnyKernel3/Image.gz
+          elif [[ -f out/arch/arm/boot/Image ]]; then
+            cp out/arch/arm/boot/Image AnyKernel3/Image
+          fi
+
+      - name: Upload kernel to artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug_${{ github.actor }}@${{ github.run_id }}
+          path: AnyKernel3/*
