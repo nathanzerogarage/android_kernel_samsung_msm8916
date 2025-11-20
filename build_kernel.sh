@@ -7,6 +7,7 @@ echo $KBUILD_BUILD_HOST
 echo -e "done?"
 sleep 5s
 
+mkdir output
 export ARCH=arm
 export CROSS_COMPILE=$(pwd)/TC/prebuilts/gcc/linux-x86/arm/arm-eabi-7.2/bin/arm-eabi-
 
