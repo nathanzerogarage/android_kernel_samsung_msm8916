@@ -1,5 +1,5 @@
-mkdir TC
+mkdir $(pwd)/TC
 
-git clone --depth=1 https://github.com/kdrag0n/proton-clang.git TC/proton-clang
+git clone --depth=1 https://github.com/kdrag0n/proton-clang.git $(pwd)/TC/proton-clang
 
-git clone --depth=1 https://github.com/nathanzerogarage/android-prebuilts-gcc-linux-x86-arm-arm-eabi-7.2.git TC/prebuilts/gcc/linux-x86/arm/arm-eabi-7.2
+git clone --depth=1 https://github.com/nathanzerogarage/android-prebuilts-gcc-linux-x86-arm-arm-eabi-7.2.git $(pwd)/TC/prebuilts/gcc/linux-x86/arm/arm-eabi-7.2

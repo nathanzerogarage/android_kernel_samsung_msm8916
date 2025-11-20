@@ -6,6 +6,8 @@ echo $KBUILD_BUILD_USER
 echo $KBUILD_BUILD_HOST
 echo -e "done?"
 sleep 5s
+export PATH=$(pwd)/TC/proton-clang/bin:${PATH}
+clang -v
 
 mkdir output
 export ARCH=arm
